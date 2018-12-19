@@ -1,0 +1,73 @@
+---
+
+
+
+- name: Download and install Service Manager archive
+  unarchive:
+    remote_src: yes
+    src: "{{ servicemanager_archive_location  }}"
+    dest: "{{ servicemanager_install_location }}"
+    owner: "{{ automic_runtime_user_name }}"
+
+- name: Create automic service manager directory
+  file:
+    state: directory
+    path: "{{ servicemanager_install_location }}"
+    owner: "{{ automic_runtime_user_name }}"
+    group: "{{ automic_runtime_group_name }}"
+    recurse: true
+
+- name: Copy ucybsmgr.ini
+  copy:
+    src: "{{ servicemanager_install_location }}/bin/ucybsmgr.ori.ini"
+    dest: "{{ config_dir }}/ucybsmgr.ini"
+    remote_src: yes
+
+- name: Template automic functions
+  template:
+    src: "automic_functions.sh.j2"
+    dest: "/etc/profile.d/automic_functions.sh"
+    owner: 'root'
+    group: 'root'
+    mode: 0644
+
+- name: Set Automic uc4.smd location
+  ini_file:
+    state: present
+    path: "{{ config_dir }}/ucybsmgr.ini"
+    section: 'Destination UC4'
+    option: 'deffile'
+    value: "{{ config_settings.deffile }}"
+
+- name: Set Automic uc4.smd location
+  ini_file:
+    state: present
+    path: "{{ config_dir }}/ucybsmgr.ini"
+    section: 'Destination UC4'
+    option: 'cmdfile'
+    value: "{{ config_settings.cmdfile }}"
+
+- name: Create uc4.smc
+  copy:
+    dest: "{{config_dir }}/uc4.smc"
+    content: |
+      ! BEGIN Ansible Managed Block
+      WAIT 2
+      CREATE {{ automic_unix_agent_name }}
+      ! END Ansible Managed Block
+
+- name: Create uc4.smd
+  copy:
+    dest: "{{config_dir }}/uc4.smd"
+    content: "DEFINE {{ automic_unix_agent_name }};{{ agent_unix_install_location }}/bin/{{ agent_binary }} -I{{ config_dir }}/{{ automic_unix_agent_name }}.ini;{{ agent_unix_install_location }}/bin/"
+
+- name: Template automic service
+  template:
+    src: "automic.service.j2"
+    dest: "/etc/systemd/system/automic.service"
+
+- name: Start Service Manager service
+  service:
+    name: automic
+    enabled: true
+    state: restarted

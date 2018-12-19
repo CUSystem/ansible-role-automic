@@ -1,0 +1,40 @@
+---
+
+- name: Create automic agent directory
+  file:
+    state: directory
+    path: "{{ agent_install_location }}"
+    owner: "{{ automic_runtime_user_name }}"
+    group: "{{ automic_runtime_group_name }}"
+
+- name: Create automic service manager directory
+  file:
+    state: directory
+    path: "{{ servicemanager_install_location }}"
+    owner: "{{ automic_runtime_user_name }}"
+    group: "{{ automic_runtime_group_name }}"
+
+- name: Create config directory
+  file:
+    state: directory
+    path: "{{ config_dir }}"
+    owner: root
+    group: "{{ automic_runtime_group_name }}"
+    mode: 0775
+
+- name: Automic Service Manager temp directory cleanup
+  cron:
+    name: "service manager cleanup"
+    state: present
+    hour: "23"
+    job: "/usr/sbin/tmpwatch --mtime {{temp_retention_days}}d {{ servicemanager_install_location }}/temp"
+    user: "{{ automic_runtime_user_name }}"
+
+me: Create agent directory
+  file:
+    state: directory
+    path: "{{ agent_unix_install_location }}"
+    owner: "{{ automic_runtime_user_name }}"
+    group: "{{ automic_runtime_group_name }}"
+    mode: 0755
+

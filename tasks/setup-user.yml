@@ -1,0 +1,37 @@
+---
+
+- name: Add runtime group
+  group:
+    name: "{{ automic_runtime_group_name }}"
+    gid: "{{ automic_runtime_group_id }}"
+    state: present
+
+- name: Add runtime user
+  user:
+    name: "{{ automic_runtime_user_name }}"
+    uid: "{{ automic_runtime_user_id }}"
+    password: "{{ encrypted_uc4_user_pass }}"
+    group: "{{ automic_runtime_group_name }}"
+    state: present
+
+- name: Add Authorized Key
+  authorized_key:
+    user: "{{ automic_runtime_user_name }}"
+    state: present
+    key: "{{ uc4_rsapub }}"
+
+- name: Add sudo commands and validate
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: '^Cmnd_Alias AUTOMIC_CMNDS'
+    line: 'Cmnd_Alias AUTOMIC_CMNDS = /usr/bin/systemctl stop automic, /usr/bin/systemctl start automic, /usr/bin/systemctl restart automic'
+    validate: '/usr/sbin/visudo -cf %s'
+
+- name: Add sudo user and validate
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: '^{{ automic_runtime_user_name }}'
+    line: '{{ automic_runtime_user_name }} ALL=(ALL) NOPASSWD: AUTOMIC_CMNDS'
+    validate: '/usr/sbin/visudo -cf %s'

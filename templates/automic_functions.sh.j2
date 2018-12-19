@@ -1,0 +1,18 @@
+#!/bin/bash
+
+#Automic Service Manager
+
+#List Processes
+auls() {
+  (cd /opt/uc4/servicemanager/bin && ./ucybsmcl -h `hostname`:8871 -n uc4 -c GET_PROCESS_LIST)
+}
+
+#START_PROCESS
+austart() {
+  (cd /opt/uc4/servicemanager/bin && ./ucybsmcl -h `hostname`:8871 -n uc4 -c START_PROCESS -s $1)
+}
+
+#STOP_PROCESS
+austop() {
+  (cd /opt/uc4/servicemanager/bin && ./ucybsmcl -h `hostname`:8871 -n uc4 -c STOP_PROCESS -s $1)
+}

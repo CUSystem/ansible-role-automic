@@ -1,0 +1,14 @@
+dependencies: []
+
+galaxy_info:
+  author: Joel Shure
+  description: Ansible role for installing Automic UC4 on RedHat 7
+  
+  license: MIT
+  
+  min_ansible_version: 2.0
+
+  platforms:
+  - name: EL
+    versions:
+    - 7

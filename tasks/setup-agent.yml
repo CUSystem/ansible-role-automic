@@ -1,0 +1,77 @@
+---
+
+
+
+- name: Download and install agent archive
+  unarchive:
+    remote_src: yes
+    src: "{{ agent_archive_location }}"
+    dest: "{{ agent_unix_install_location }}"
+    owner: "{{ automic_runtime_user_name }}"
+
+- name: Agent temp directory cleanup
+  cron:
+    name: "{{ automic_unix_agent_name}} Agent temp directory cleanup"
+    state: present
+    hour: "23"
+    job: "/usr/sbin/tmpwatch --mtime {{ temp_retention_days }}d {{ agent_unix_install_location }}/temp"
+    user: "{{ automic_runtime_user_name }}"
+
+- name: Agent out directory cleanup
+  cron:
+    name: "{{ automic_unix_agent_name}} Agent out directory cleanup"
+    state: present
+    hour: "23"
+    job: "/usr/sbin/tmpwatch --mtime {{ temp_retention_days }}d {{ agent_unix_install_location }}/out"
+    user: "{{ automic_runtime_user_name }}"
+
+- name:  Create Agent configuration file
+  copy:
+    src: "{{ agent_unix_install_location }}/bin/ucxjxxx.ori.ini"
+    dest: "{{ config_dir }}/{{ automic_unix_agent_name }}.ini"
+    remote_src: yes
+    owner: "{{ automic_runtime_user_name }}"                                                               --
+    group: "{{ automic_runtime_group_name }}"
+    mode: 0644
+
+- name: Set Automic Server host
+  ini_file:
+    state: present
+    path: "{{ config_dir }}/{{ automic_unix_agent_name }}.ini"
+    section: 'TCP/IP'
+    option: 'cp'
+    value: "{{ automic_ae_server_host }}:{{ automic_ae_server_port }}"
+
+- name: Set Automic System Name
+  ini_file:
+    state: present
+    path: "{{ config_dir }}/{{ automic_unix_agent_name }}.ini"
+    section: 'GLOBAL'
+    option: 'system'
+    value: "{{ automic_system_name }}"
+
+- name: Set Automic Agent Name
+  ini_file:
+    state: present
+    path: "{{ config_dir }}/{{ automic_unix_agent_name }}.ini"
+    section: 'GLOBAL'
+    option: 'name'
+    value: "{{ automic_unix_agent_name }}"
+
+- name: Set license class
+  ini_file:
+    state: present
+    path: "{{ config_dir }}/{{ automic_unix_agent_name }}.ini"
+    section: 'GLOBAL'
+    option: 'licence_class'
+    value: "{{ licence_class }}"
+
+- name: Set keystore
+  ini_file:
+    state: present
+    path: "{{ config_dir }}/{{ automic_unix_agent_name }}.ini"
+    section: 'AUTHORIZATION'
+    option: 'KeyStore'
+    value: "{{ config_dir }}/{{ automic_unix_agent_name }}.kstr"
+
+

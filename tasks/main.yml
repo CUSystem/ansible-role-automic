@@ -1,0 +1,10 @@
+---
+- include: setup-user.yml 
+
+- include: file-config.yml
+
+- include: setup-servicemanager.yml
+
+- include: setup-agent.yml
+
+

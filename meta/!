@@ -1,0 +1,12 @@
+---
+dependencies: []
+
+galaxy_info:
+  author: jshure
+  description: Automic Uc4 service manager and agent install and configure on RedHat 7
+  license: MIT
+  min_ansible_version: 2.0
+  platforms:
+  - name: EL
+    versions:
+    - 7

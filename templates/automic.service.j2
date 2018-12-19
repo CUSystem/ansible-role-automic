@@ -1,0 +1,15 @@
+[Unit]
+Description=Automic (UC4)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User={{ automic_runtime_user_name }}
+WorkingDirectory={{ servicemanager_install_location }}/bin
+ExecStart={{ servicemanager_install_location }}/bin/ucybsmgr -i{{ config_dir }}/ucybsmgr.ini uc4
+Restart=on-abnormal
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
