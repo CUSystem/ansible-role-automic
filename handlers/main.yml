@@ -1,5 +1,0 @@
----
-- name: restart automic
-  service: name=automic state=restarted
-
-
