@@ -30,7 +30,7 @@
     src: "{{ agent_unix_install_location }}/bin/ucxjxxx.ori.ini"
     dest: "{{ config_dir }}/{{ automic_unix_agent_name }}.ini"
     remote_src: yes
-    owner: "{{ automic_runtime_user_name }}"                                                               --
+    owner: "{{ automic_runtime_user_name }}"                                                              
     group: "{{ automic_runtime_group_name }}"
     mode: 0644
 
