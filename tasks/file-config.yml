@@ -30,7 +30,7 @@
     job: "/usr/sbin/tmpwatch --mtime {{temp_retention_days}}d {{ servicemanager_install_location }}/temp"
     user: "{{ automic_runtime_user_name }}"
 
-me: Create agent directory
+- name: Create agent directory
   file:
     state: directory
     path: "{{ agent_unix_install_location }}"
