@@ -75,5 +75,6 @@
     value: "{{ config_dir }}/{{ automic_unix_agent_name }}.kstr"
 
 - name: restart Service Manager service
-  notify: restart automic
+  notify: 
+    - restart automic
 

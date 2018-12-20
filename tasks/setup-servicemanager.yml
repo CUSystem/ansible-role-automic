@@ -67,4 +67,5 @@
     dest: "/etc/systemd/system/automic.service"
 
 - name: Start Service Manager service
-  notify: restart automic
+  notify: 
+    - restart automic
