@@ -25,7 +25,7 @@
     job: "/usr/sbin/tmpwatch --mtime {{ temp_retention_days }}d {{ agent_unix_install_location }}/out"
     user: "{{ automic_runtime_user_name }}"
 
-- name:  Create Agent configuration file
+- name: Create Agent configuration file
   copy:
     src: "{{ agent_unix_install_location }}/bin/ucxjxxx.ori.ini"
     dest: "{{ config_dir }}/{{ automic_unix_agent_name }}.ini"
