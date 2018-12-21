@@ -36,6 +36,7 @@
 - name: Set SUID for agent binary
   file:
     path: "{{ agent_unix_install_location }}/bin/{{ agent_binary }}"
+    owner: root
     mode: '4750'  
  
 - name: Create Agent configuration file
