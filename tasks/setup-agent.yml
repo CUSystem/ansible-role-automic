@@ -25,6 +25,19 @@
     job: "/usr/sbin/tmpwatch --mtime {{ temp_retention_days }}d {{ agent_unix_install_location }}/out"
     user: "{{ automic_runtime_user_name }}"
 
+
+- name: Set Automic agent ownership though directory
+  file:
+    path: "{{ agent_unix_install_location }}"
+    owner: "{{ automic_runtime_user_name }}"
+    group: "{{ automic_runtime_group_name }}"
+    recurse: yes
+
+- name: Set SUID for agent binary
+  file:
+    path: "{{ agent_unix_install_location }}/bin/{{ agent_binary }}"
+    mode: '4750'  
+ 
 - name: Create Agent configuration file
   copy:
     src: "{{ agent_unix_install_location }}/bin/ucxjxxx.ori.ini"
