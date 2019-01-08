@@ -30,22 +30,32 @@ And set the output to the encrypted_uc4_user_pass variable
 
 ### Example of the minimum variables to set are:
 
-  encrypted_uc4_user_pass: 		<encrypted password>
-  uc4_rsapub:          			ssh-rsa AAAJFDSASDLKJF......
-  servicemanager_archive_location:	"<path_to_servicemanage_archive>"
-  agent_archive_location:		"<url_to_agent_archive>"
-  automic_ae_server_host:		"my.host.com"
-  automic_ae_server_port:		2217
+encrypted_uc4_user_pass: <encrypted password>
+  
+uc4_rsapub: ssh-rsa AAAJFDSASDLKJF......
+
+servicemanager_archive_location: "<path_to_servicemanage_archive>"
+
+agent_archive_location: "<url_to_agent_archive>"
+
+automic_ae_server_host:	"my.host.com"
+
+automic_ae_server_port:	2217
 
 ### Common defaults that you may wish to override:
 
   licence_class: 'V' #[sic]
-  automic_runtime_user_name:     'uc4'
-  automic_runtime_group_name:    'uc4'
-  automic_runtime_user_id:       '601'
-  automic_runtime_group_id:      '601'
-  automic_name:		      	 'UC4'
-  automic_system_name:           'UC4'
+  automic_runtime_user_name: 'uc4'
+
+  automic_runtime_group_name: 'uc4'
+
+  automic_runtime_user_id: '601'
+
+  automic_runtime_group_id: '601'
+
+  automic_name: 'UC4'
+
+  automic_system_name: 'UC4'
 
 ## License
 
