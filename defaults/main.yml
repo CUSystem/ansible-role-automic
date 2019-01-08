@@ -6,7 +6,7 @@ automic_runtime_user_id:       '601'
 automic_runtime_group_id:      '601'
 automic_name: 'UC4'
 automic_system_name: 'UC4'
-automic_unix_agent_name: "{{ automic__name }}_UX"
+automic_unix_agent_name: "{{ automic_name }}_UX"
 automic_oracle_home: '/usr/lib/oracle/12.1/client64'
 automic_basedir:     '/opt/uc4'
 servicemanager_install_location: "{{ automic_basedir }}/servicemanager"
