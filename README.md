@@ -44,6 +44,7 @@ automic_runtime_user_name:     'uc4'
 automic_runtime_group_name:    'uc4'
 automic_runtime_user_id:       '601'
 automic_runtime_group_id:      '601'
+automic_name:		       'UC4'
 automic_system_name:           'UC4'
 
 ## License
