@@ -4,7 +4,7 @@ automic_runtime_user_name:     'uc4'
 automic_runtime_group_name:    'uc4'
 automic_runtime_user_id:       '601'
 automic_runtime_group_id:      '601'
-automic_name: 'IWH'
+automic_name: 'UC4'
 automic_system_name: 'UC4'
 automic_unix_agent_name: "{{ automic_name }}_UX"
 automic_oracle_home: '/usr/lib/oracle/12.1/client64'
